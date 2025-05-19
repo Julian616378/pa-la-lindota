@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja de Regalo Sorpresa</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0ff, #00c3ff, #0099ff);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .gift-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .box-base {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #00b3d4;
+            border: 3px solid #008fb0;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .box-lid {
+            position: absolute;
+            width: 120%;
+            height: 30px;
+            background-color: #00d4e0;
+            border: 3px solid #008fb0;
+            border-radius: 8px;
+            top: -33px;
+            left: -10%;
+            transform-origin: bottom;
+            transition: transform 1s ease;
+        }
+
+        .gift-ribbon {
+            position: absolute;
+            width: 20px;
+            height: 130%;
+            background-color: #ff4081;
+            top: -30px;
+            left: calc(50% - 10px);
+            z-index: 2;
+        }
+
+        .gift-ribbon-horizontal {
+            position: absolute;
+            width: 130%;
+            height: 20px;
+            background-color: #ff4081;
+            top: calc(50% - 10px);
+            left: -15%;
+            z-index: 2;
+        }
+
+        .gift-bow {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff4081;
+            border-radius: 50%;
+            top: -50px;
+            left: calc(50% - 25px);
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .surprise-image {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            opacity: 0;
+            transform: translateY(50px) scale(0.5);
+            transition: all 0.5s ease;
+            object-fit: cover;
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .open .box-lid {
+            transform: rotateX(-110deg);
+        }
+
+        .open .surprise-image {
+            opacity: 1;
+            animation: popSpinAndGrow 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        @keyframes popSpinAndGrow {
+            0% {
+                transform: translateY(0) scale(0.5) rotate(0deg);
+                opacity: 0;
+                left: 10%;
+                top: 10%;
+            }
+            10% {
+                transform: translateY(-50px) scale(0.6) rotate(180deg);
+                opacity: 0.5;
+                left: 10%;
+                top: 10%;
+            }
+            20% {
+                transform: translateY(-100px) scale(0.7) rotate(360deg);
+                opacity: 0.7;
+                left: 10%;
+                top: 10%;
+            }
+            30% {
+                transform: translateY(-150px) scale(0.8) rotate(540deg);
+                opacity: 0.8;
+                left: 10%;
+                top: 10%;
+            }
+            40% {
+                transform: translateY(-180px) scale(0.9) rotate(720deg);
+                opacity: 0.9;
+                left: 10%;
+                top: 10%;
+            }
+            50% {
+                transform: translateY(-200px) scale(1) rotate(900deg);
+                opacity: 1;
+                left: 10%;
+                top: 10%;
+            }
+            60% {
+                transform: translateY(-200px) scale(1.2) rotate(1080deg);
+                opacity: 1;
+                left: calc(50% - 48%);
+                top: calc(50% - 48%);
+            }
+            80% {
+                transform: translateY(-200px) scale(1.5) rotate(1260deg);
+                opacity: 1;
+                left: calc(50% - 60%);
+                top: calc(50% - 60%);
+            }
+            100% {
+                transform: translateY(-200px) scale(2) rotate(1440deg);
+                opacity: 1;
+                left: calc(50% - 80%);
+                top: calc(50% - 80%);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+            left: calc(50% - 80%) !important;
+            top: calc(50% - 80%) !important;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(2) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) scale(2) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) scale(2) rotate(0deg);
+            }
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gift-box">
+            <div class="box-base"></div>
+            <div class="box-lid"></div>
+            <div class="gift-ribbon"></div>
+            <div class="gift-ribbon-horizontal"></div>
+            <div class="gift-bow"></div>
+            <img class="surprise-image" src="/api/placeholder/400/320" alt="Sorpresa" />
+        </div>
+        <div class="particles"></div>
+    </div>
+
+    <div class="instructions">Haz clic en la caja para abrirla</div>
+
+    <audio id="background-music">
+        <source src="https://cdn.pixabay.com/download/audio/2023/04/21/audio_42902e0d90.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const giftBox = document.querySelector('.gift-box');
+            const boxBase = document.querySelector('.box-base');
+            const boxLid = document.querySelector('.box-lid');
+            const giftRibbon = document.querySelector('.gift-ribbon');
+            const giftRibbonHorizontal = document.querySelector('.gift-ribbon-horizontal');
+            const giftBow = document.querySelector('.gift-bow');
+            const surpriseImage = document.querySelector('.surprise-image');
+            const audio = document.getElementById('background-music');
+            const particles = document.querySelector('.particles');
+            let opened = false;
+
+            // Precargar audio para mejor reproducción
+            audio.load();
+            
+            // Función para crear partículas
+            function createParticles() {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    particle.style.backgroundColor = getRandomColor();
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = '50%';
+                    particle.style.width = Math.random() * 8 + 5 + 'px';
+                    particle.style.height = particle.style.width;
+                    
+                    // Animación de la partícula
+                    const animationDuration = Math.random() * 2 + 1;
+                    particle.style.animation = `particle-animation ${animationDuration}s ease-out forwards`;
+                    
+                    // Keyframes para la animación de partículas
+                    const keyframes = `
+                        @keyframes particle-animation {
+                            0% {
+                                transform: translate(0, 0);
+                                opacity: 1;
+                            }
+                            100% {
+                                transform: translate(${(Math.random() - 0.5) * 200}px, ${-Math.random() * 200 - 50}px);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    
+                    const styleSheet = document.createElement('style');
+                    styleSheet.innerText = keyframes;
+                    document.head.appendChild(styleSheet);
+                    
+                    particles.appendChild(particle);
+                    
+                    // Eliminar partícula después de la animación
+                    setTimeout(() => {
+                        particles.removeChild(particle);
+                        document.head.removeChild(styleSheet);
+                    }, animationDuration * 1000);
+                }
+            }
+
+            // Función para obtener un color aleatorio
+            function getRandomColor() {
+                const colors = ['#00ffff', '#00ccff', '#66ffff', '#99ffff', '#ff4081'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            // Función para hacer que la caja desaparezca gradualmente
+            function fadeOutGiftBox() {
+                // Desvanecer gradualmente todos los elementos de la caja durante 2 segundos
+                setTimeout(() => {
+                    boxBase.style.transition = 'opacity 2s ease-out';
+                    boxLid.style.transition = 'opacity 2s ease-out';
+                    giftRibbon.style.transition = 'opacity 2s ease-out';
+                    giftRibbonHorizontal.style.transition = 'opacity 2s ease-out';
+                    giftBow.style.transition = 'opacity 2s ease-out';
+                    
+                    boxBase.style.opacity = '0';
+                    boxLid.style.opacity = '0';
+                    giftRibbon.style.opacity = '0';
+                    giftRibbonHorizontal.style.opacity = '0';
+                    giftBow.style.opacity = '0';
+                }, 1000); // Comienza a desvanecer después de 1 segundo
+            }
+
+            // Función para intentar reproducir el audio de múltiples maneras
+            function playAudio() {
+                // Configurar volumen
+                audio.volume = 0.7;
+                
+                // Intentar reproducir de varias maneras
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        console.log('Audio reproducido correctamente');
+                    }).catch(error => {
+                        console.log('Error al reproducir audio:', error);
+                        // Intentar otra vez con interacción del usuario
+                        document.addEventListener('click', function() {
+                            audio.play().catch(e => console.log('Segundo intento fallido:', e));
+                        }, { once: true });
+                    });
+                }
+            }
+
+            // Manejo del clic en la caja
+            giftBox.addEventListener('click', function() {
+                if (!opened) {
+                    opened = true;
+                    giftBox.classList.add('open');
+                    
+                    // Crear efecto de partículas
+                    createParticles();
+                    
+                    // Intentar reproducir música
+                    playAudio();
+                    
+                    // Desvanecer la caja durante la animación
+                    fadeOutGiftBox();
+                    
+                    // Añadir la animación de flotación después de la animación inicial
+                    setTimeout(() => {
+                        surpriseImage.classList.remove('spinning');
+                        surpriseImage.classList.add('floating');
+                    }, 3000); // Se ajusta a 3 segundos para coincidir con la duración de popSpinAndGrow
+                }
+            });
+
+            // Para asegurar que el audio esté listo cuando el usuario interactúe
+            audio.addEventListener('canplaythrough', function() {
+                console.log('Audio cargado y listo para reproducir');
+            });
+            
+            // Manejar errores de audio
+            audio.addEventListener('error', function(e) {
+                console.log('Error de audio:', e);
+            });
+        });
+    </script>
+</body>
+</html>
