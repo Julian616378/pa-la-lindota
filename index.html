@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caja de Regalo Sorpresa</title>
+    <title>Caja Misteriosa</title>
     <style>
         body {
             margin: 0;
@@ -11,9 +11,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0ff, #00c3ff, #0099ff);
+            background: linear-gradient(135deg, #1a0033, #330033, #000000);
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         .container {
@@ -29,61 +29,89 @@
             position: relative;
             cursor: pointer;
             transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
         }
 
         .box-base {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #00b3d4;
-            border: 3px solid #008fb0;
+            background-color: #1a0033;
+            border: 3px solid #4a148c;
             border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(106, 27, 154, 0.5);
         }
 
         .box-lid {
             position: absolute;
             width: 120%;
             height: 30px;
-            background-color: #00d4e0;
-            border: 3px solid #008fb0;
+            background-color: #4a148c;
+            border: 3px solid #7b1fa2;
             border-radius: 8px;
             top: -33px;
             left: -10%;
             transform-origin: bottom;
-            transition: transform 1s ease;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 5px 20px rgba(123, 31, 162, 0.6);
         }
 
         .gift-ribbon {
             position: absolute;
             width: 20px;
             height: 130%;
-            background-color: #ff4081;
+            background: linear-gradient(to bottom, #9c27b0, #7b1fa2);
             top: -30px;
             left: calc(50% - 10px);
             z-index: 2;
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.7);
         }
 
         .gift-ribbon-horizontal {
             position: absolute;
             width: 130%;
             height: 20px;
-            background-color: #ff4081;
+            background: linear-gradient(to right, #9c27b0, #7b1fa2);
             top: calc(50% - 10px);
             left: -15%;
             z-index: 2;
+            box-shadow: 0 0 10px rgba(156, 39, 176, 0.7);
         }
 
         .gift-bow {
             position: absolute;
             width: 50px;
             height: 50px;
-            background-color: #ff4081;
+            background: radial-gradient(circle, #9c27b0, #7b1fa2);
             border-radius: 50%;
             top: -50px;
             left: calc(50% - 25px);
             z-index: 3;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 25px rgba(156, 39, 176, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .gift-bow:before, .gift-bow:after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .gift-bow:before {
+            top: 5px;
+            left: 5px;
+        }
+
+        .gift-bow:after {
+            bottom: 5px;
+            right: 5px;
         }
 
         .surprise-image {
@@ -94,10 +122,11 @@
             left: 10%;
             opacity: 0;
             transform: translateY(50px) scale(0.5);
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
             object-fit: cover;
             border-radius: 8px;
             z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(156, 39, 176, 0.8));
         }
 
         .open .box-lid {
@@ -106,81 +135,50 @@
 
         .open .surprise-image {
             opacity: 1;
-            animation: popSpinAndGrow 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            animation: elegantReveal 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
         }
 
-        @keyframes popSpinAndGrow {
+        @keyframes elegantReveal {
             0% {
                 transform: translateY(0) scale(0.5) rotate(0deg);
                 opacity: 0;
                 left: 10%;
                 top: 10%;
             }
-            10% {
-                transform: translateY(-50px) scale(0.6) rotate(180deg);
-                opacity: 0.5;
-                left: 10%;
-                top: 10%;
-            }
-            20% {
-                transform: translateY(-100px) scale(0.7) rotate(360deg);
+            30% {
+                transform: translateY(-100px) scale(0.8) rotate(360deg);
                 opacity: 0.7;
                 left: 10%;
                 top: 10%;
             }
-            30% {
-                transform: translateY(-150px) scale(0.8) rotate(540deg);
-                opacity: 0.8;
-                left: 10%;
-                top: 10%;
-            }
-            40% {
-                transform: translateY(-180px) scale(0.9) rotate(720deg);
-                opacity: 0.9;
-                left: 10%;
-                top: 10%;
-            }
-            50% {
-                transform: translateY(-200px) scale(1) rotate(900deg);
-                opacity: 1;
-                left: 10%;
-                top: 10%;
-            }
             60% {
-                transform: translateY(-200px) scale(1.2) rotate(1080deg);
+                transform: translateY(-200px) scale(1.2) rotate(720deg);
                 opacity: 1;
-                left: calc(50% - 48%);
-                top: calc(50% - 48%);
-            }
-            80% {
-                transform: translateY(-200px) scale(1.5) rotate(1260deg);
-                opacity: 1;
-                left: calc(50% - 60%);
-                top: calc(50% - 60%);
+                left: 10%;
+                top: 10%;
             }
             100% {
-                transform: translateY(-200px) scale(2) rotate(1440deg);
+                transform: translate(-50%, -50%) scale(1.8) rotate(1080deg);
                 opacity: 1;
-                left: calc(50% - 80%);
-                top: calc(50% - 80%);
+                left: 50%;
+                top: 50%;
+                filter: drop-shadow(0 0 30px rgba(156, 39, 176, 0.9));
             }
         }
 
         .floating {
-            animation: float 3s ease-in-out infinite;
-            left: calc(50% - 80%) !important;
-            top: calc(50% - 80%) !important;
+            animation: mysticFloat 4s ease-in-out infinite;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) scale(1.8) !important;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) scale(2) rotate(0deg);
+        @keyframes mysticFloat {
+            0%, 100% {
+                transform: translate(-50%, -55%) scale(1.8) rotate(-2deg);
             }
             50% {
-                transform: translateY(-30px) scale(2) rotate(5deg);
-            }
-            100% {
-                transform: translateY(0) scale(2) rotate(0deg);
+                transform: translate(-50%, -45%) scale(1.8) rotate(2deg);
             }
         }
 
@@ -189,29 +187,49 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 0;
         }
 
         .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             opacity: 0;
+            filter: blur(1px);
         }
 
         .instructions {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             text-align: center;
             color: white;
             font-size: 18px;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 10px 20px;
-            border-radius: 20px;
+            background-color: rgba(74, 20, 140, 0.5);
+            padding: 12px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            border: 1px solid #9c27b0;
+            box-shadow: 0 0 15px rgba(156, 39, 176, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .instructions:hover {
+            background-color: rgba(106, 27, 154, 0.7);
+            transform: scale(1.05);
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(156, 39, 176, 0.3), transparent 70%);
+            z-index: -1;
         }
     </style>
 </head>
 <body>
+    <div class="glow"></div>
     <div class="container">
         <div class="gift-box">
             <div class="box-base"></div>
@@ -224,12 +242,11 @@
         <div class="particles"></div>
     </div>
 
-    <div class="instructions">Haz clic en la caja</div>
+    <div class="instructions">Haz clic en la caja misteriosa</div>
 
-    <audio id="background-music">
-
-
-        <source src="https://cdn.pixabay.com/download/audio/2023/04/21/audio_42902e0d90.mp3" type="audio/mpeg">
+    <!-- Reproductor de audio local -->
+    <audio id="background-audio">
+        <source src="cancion.mp4" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
@@ -242,37 +259,39 @@
             const giftRibbonHorizontal = document.querySelector('.gift-ribbon-horizontal');
             const giftBow = document.querySelector('.gift-bow');
             const surpriseImage = document.querySelector('.surprise-image');
-            const audio = document.getElementById('background-music');
+            const audio = document.getElementById('background-audio');
             const particles = document.querySelector('.particles');
+            const glow = document.querySelector('.glow');
             let opened = false;
 
-            // Precargar audio para mejor reproducción
+            // Precargar audio
             audio.load();
             
-            // Función para crear partículas
+            // Función para crear partículas místicas
             function createParticles() {
-                for (let i = 0; i < 30; i++) {
+                particles.innerHTML = '';
+                for (let i = 0; i < 50; i++) {
                     const particle = document.createElement('div');
                     particle.classList.add('particle');
-                    particle.style.backgroundColor = getRandomColor();
+                    particle.style.background = getRandomParticleColor();
                     particle.style.left = Math.random() * 100 + '%';
-                    particle.style.top = '50%';
-                    particle.style.width = Math.random() * 8 + 5 + 'px';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.width = Math.random() * 6 + 4 + 'px';
                     particle.style.height = particle.style.width;
                     
-                    // Animación de la partícula
-                    const animationDuration = Math.random() * 2 + 1;
-                    particle.style.animation = `particle-animation ${animationDuration}s ease-out forwards`;
+                    const duration = Math.random() * 3 + 2;
+                    const delay = Math.random() * 1;
                     
-                    // Keyframes para la animación de partículas
+                    particle.style.animation = `mysticParticle ${duration}s ease-out ${delay}s forwards`;
+                    
                     const keyframes = `
-                        @keyframes particle-animation {
+                        @keyframes mysticParticle {
                             0% {
-                                transform: translate(0, 0);
-                                opacity: 1;
+                                transform: translate(0, 0) scale(1);
+                                opacity: 0.8;
                             }
                             100% {
-                                transform: translate(${(Math.random() - 0.5) * 200}px, ${-Math.random() * 200 - 50}px);
+                                transform: translate(${(Math.random() - 0.5) * 300}px, ${-Math.random() * 300 - 100}px) scale(0.3);
                                 opacity: 0;
                             }
                         }
@@ -284,90 +303,96 @@
                     
                     particles.appendChild(particle);
                     
-                    // Eliminar partícula después de la animación
                     setTimeout(() => {
-                        particles.removeChild(particle);
-                        document.head.removeChild(styleSheet);
-                    }, animationDuration * 1000);
+                        if (particle.parentNode) {
+                            particles.removeChild(particle);
+                            document.head.removeChild(styleSheet);
+                        }
+                    }, duration * 1000);
                 }
             }
 
-            // Función para obtener un color aleatorio
-            function getRandomColor() {
-                const colors = ['#00ffff', '#00ccff', '#66ffff', '#99ffff', '#ff4081'];
+            function getRandomParticleColor() {
+                const colors = [
+                    'radial-gradient(circle, #9c27b0, transparent 70%)',
+                    'radial-gradient(circle, #7b1fa2, transparent 70%)',
+                    'radial-gradient(circle, #4a148c, transparent 70%)',
+                    'radial-gradient(circle, #e1bee7, transparent 70%)'
+                ];
                 return colors[Math.floor(Math.random() * colors.length)];
             }
 
-            // Función para hacer que la caja desaparezca gradualmente
             function fadeOutGiftBox() {
-                // Desvanecer gradualmente todos los elementos de la caja durante 2 segundos
-                setTimeout(() => {
-                    boxBase.style.transition = 'opacity 2s ease-out';
-                    boxLid.style.transition = 'opacity 2s ease-out';
-                    giftRibbon.style.transition = 'opacity 2s ease-out';
-                    giftRibbonHorizontal.style.transition = 'opacity 2s ease-out';
-                    giftBow.style.transition = 'opacity 2s ease-out';
-                    
-                    boxBase.style.opacity = '0';
-                    boxLid.style.opacity = '0';
-                    giftRibbon.style.opacity = '0';
-                    giftRibbonHorizontal.style.opacity = '0';
-                    giftBow.style.opacity = '0';
-                }, 1000); // Comienza a desvanecer después de 1 segundo
+                const elements = [boxBase, boxLid, giftRibbon, giftRibbonHorizontal, giftBow];
+                elements.forEach(el => {
+                    el.style.transition = 'all 1.5s cubic-bezier(0.19, 1, 0.22, 1)';
+                    el.style.opacity = '0';
+                    el.style.transform = 'scale(0.8)';
+                });
             }
 
-            // Función para intentar reproducir el audio de múltiples maneras
             function playAudio() {
-                // Configurar volumen
-                audio.volume = 0.7;
-                
-                // Intentar reproducir de varias maneras
+                audio.volume = 0.7; // Volumen al 70%
                 const playPromise = audio.play();
                 
+                // Manejar posibles errores de autoplay
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        console.log('Audio reproducido correctamente');
-                    }).catch(error => {
-                        console.log('Error al reproducir audio:', error);
-                        // Intentar otra vez con interacción del usuario
-                        document.addEventListener('click', function() {
-                            audio.play().catch(e => console.log('Segundo intento fallido:', e));
+                    playPromise.catch(error => {
+                        // Si falla, esperar a que el usuario interactúe
+                        document.addEventListener('click', function audioRetry() {
+                            audio.play();
                         }, { once: true });
                     });
                 }
             }
 
-            // Manejo del clic en la caja
+            function animateGlow() {
+                let scale = 1;
+                let direction = 0.005;
+                
+                function pulse() {
+                    scale += direction;
+                    if (scale > 1.1 || scale < 0.9) direction *= -1;
+                    glow.style.transform = `scale(${scale})`;
+                    requestAnimationFrame(pulse);
+                }
+                
+                pulse();
+            }
+
             giftBox.addEventListener('click', function() {
                 if (!opened) {
                     opened = true;
                     giftBox.classList.add('open');
                     
-                    // Crear efecto de partículas
                     createParticles();
-                    
-                    // Intentar reproducir música
-                    playAudio();
-                    
-                    // Desvanecer la caja durante la animación
                     fadeOutGiftBox();
+                    animateGlow();
                     
-                    // Añadir la animación de flotación después de la animación inicial
+                    // Reproducir audio cuando la imagen comienza a salir
                     setTimeout(() => {
-                        surpriseImage.classList.remove('spinning');
+                        playAudio();
+                    }, 500);
+                    
+                    setTimeout(() => {
+                        surpriseImage.style.left = '50%';
+                        surpriseImage.style.top = '50%';
                         surpriseImage.classList.add('floating');
-                    }, 3000); // Se ajusta a 3 segundos para coincidir con la duración de popSpinAndGrow
+                    }, 2500);
                 }
             });
 
-            // Para asegurar que el audio esté listo cuando el usuario interactúe
-            audio.addEventListener('canplaythrough', function() {
-                console.log('Audio cargado y listo para reproducir');
+            // Efecto de hover en la caja
+            giftBox.addEventListener('mouseenter', () => {
+                if (!opened) {
+                    giftBow.style.transform = 'scale(1.1) translateY(-5px)';
+                }
             });
             
-            // Manejar errores de audio
-            audio.addEventListener('error', function(e) {
-                console.log('Error de audio:', e);
+            giftBox.addEventListener('mouseleave', () => {
+                if (!opened) {
+                    giftBow.style.transform = 'scale(1)';
+                }
             });
         });
     </script>
